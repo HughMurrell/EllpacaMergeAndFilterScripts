@@ -126,8 +126,7 @@ hk=DataFrame( donor=[], sequences=[], filtered=[], no_start=[], bad_match=[] )
 for file in file_names
     donor=split(file,"_")[2]
     in_file = in_dir * file
-    out_file = out_dir * file[1:end-6] * "-trans.fasta"
-    out_file = replace(out_file, "_nt_" => "_aa_")
+    out_file = out_dir * replace(file, "_nt_" => "_aa_")
     print("translating and " )
     nams, seqs = read_fasta(in_file)
     seq_count=length(seqs)
@@ -136,12 +135,12 @@ for file in file_names
     seqs=(BioSequences.translate).(seqs)
     
     write_fasta(out_file, seqs, names=nams, aa=true, append=false)
-    ali_file=out_file[1:end-6] * "-maff-hxb2.fasta"
+    ali_file=out_file[1:end-6] * "_a-maff_w-hxb2.fasta"
     my_mafft(seed_file_aa, out_file, ali_file)
     rm(out_file)
         
     # now trim ali_file to match ref
-    ali_reject_file=reject_dir * file[1:end-6] * "-trans-maff-hxb2-rejects.fasta"
+    ali_reject_file=reject_dir * file[1:end-6] * "_a-maff_w-hxb2+rejects.fasta"
     
     nams, seqs = read_aa_fasta(ali_file)
     # startTrim=min( findfirst('-'.!=(collect(string(seqs[1])))), findfirst('-'.!=(collect(string(seqs[2])))) )

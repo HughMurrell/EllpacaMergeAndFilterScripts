@@ -113,7 +113,8 @@ function merge_seqs_by_donor(in_dir, out_dir, donor, files)
     fs_ints=(x->parse(Int, String(split(x,"-")[2])[3:end])).(p_nams)
     ma_floats=(x->parse(Float64, String(split(x,"-")[3])[3:end])).(p_nams)
     
-    out_file=out_dir * "C002_" * donor * "_" * join(visits,"-") * "_env_nt_p-fs5-ma0p7_f-hmff-merg.fasta"
+    # dropped the -merg from the f flag on Chris request
+    out_file=out_dir * "C002_" * donor * "_" * join(visits,"-") * "_env_nt_p-fs5-ma0p7_f-hmff.fasta"
     write_fasta(out_file,[], names=[],append=false)
     
     r=1

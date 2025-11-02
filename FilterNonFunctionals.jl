@@ -178,7 +178,7 @@ function pairwise_filter(in_dir,in_file,ref_nam,ref_seq,out_dir,out_reject_dir;h
     end
     write_fasta(out_dir*in_file[1:end-6]*"_f-hmff.fasta",trim_ali_seqs,seq_names=nams)
     if length(reject_seqs) > 0
-        write_fasta(out_reject_dir*in_file[1:end-6]*"_f-hmff-rejects.fasta",degap.(reject_seqs),seq_names=reject_nams)
+        write_fasta(out_reject_dir*in_file[1:end-6]*"_f-hmff+rejects.fasta",degap.(reject_seqs),seq_names=reject_nams)
     end
     hk_rec=[donor,visit,pool,facility,start_count,end_count-1,start_count-end_count+1,
                 orf_reject_count,no_start_codon_count,no_stop_codon_count,bad_match_count]
