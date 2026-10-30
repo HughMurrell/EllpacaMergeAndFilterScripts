@@ -1,7 +1,7 @@
 using Pkg
 Pkg.activate(".")
 ENV["MPLBACKEND"] = "Agg"
-using FASTX, BioSequences, StatsBase, DataFrames, CSV
+using FASTX, BioSequences, StatsBase, DataFrames, CSV, OrderedCollections
 using MAFFT_jll
 
 ########### first define some functions for later use
@@ -158,7 +158,8 @@ end
 
 function variant_collapse(seqs; prefix = "seq_")
     dic = countmap(uppercase.(seqs))
-    OC = sort(dic, by = x -> dic[x], rev = true)
+    ord_dic = OrderedDict(dic)
+    OC = sort(ord_dic, by = x -> ord_dic[x], rev = true)
     seqs,sizes = collect(keys(OC)),collect(values(OC))
     names = [prefix*string(i)*"-"*string(sizes[i]) for i in 1:length(seqs)]
     return seqs,sizes,names

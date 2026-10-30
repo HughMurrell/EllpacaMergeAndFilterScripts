@@ -81,9 +81,10 @@ function rename_file_and_seqs(in_dir, out_dir, in_file_name, chk)
     # do some housekeeping
     colnames = names(chk)
     visits=union((x->split(x,"_")[2][1:4]).(nams))
+    @show visits
     for visit in visits
         visit_nams = (x->(split(x,"_")[2][1:4]==visit)).(nams)
-        pool_facility="p"*split(in_file_name,"-")[1][5:end]
+        pool_facility="p"*split(in_file_name,"/")[1][5:end]
         rec=[donor,visit,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         for i in 1:length(colnames)
             if colnames[i] == pool_facility
@@ -98,6 +99,7 @@ function rename_file_and_seqs(in_dir, out_dir, in_file_name, chk)
     end
     facility=split(in_file_name,"_")[2][1:4]
     facility=split(facility,"-")[1]
+    facility=split(facility,"/")[1]
     out_file_name = "C002_"*donor*"_"*visit*"_env_nt_s-0000-p"*pool*"-"*facility*"_p-fs5-ma0p7"
     if donor*"_"*visit in SUSPECTS
         out_file_name=out_file_name * "_e-suspect"
@@ -117,25 +119,25 @@ println("using Julia version: $(VERSION)")
 t1 = time()
 pools=[1,2,3,4,5,6,7,8,8,9,9,10,10,11,12]
 # pools=[8,8]
-in_dir="data_in/"
+in_dir="/Volumes/LaCie/ellpaca/postproc/"
 out_dir="ellpaca_collection/CAPRISA_002/env_nt_porpid/"
 mkpath(out_dir)
 pool_dirs=["pool$(i)_" for i in pools]
-pool_dirs_ext=["nicd-postproc",
-           "nicd-postproc",
-           "earlham-postproc",
-           "earlham-postproc",
-           "uw-postproc",
-           "nicd-postproc",
-           "nicd-postproc",
-           "nicd-postproc",
-           "inqaba-postproc",
-           "uw-postproc",
-           "inqaba-postproc",
-           "uw-postproc",
-           "inqaba-postproc",
-           "inqaba-postproc",
-           "inqaba-postproc"]
+pool_dirs_ext=["nicd",
+           "nicd",
+           "earlham",
+           "earlham",
+           "uw",
+           "nicd",
+           "nicd",
+           "nicd",
+           "inqaba",
+           "uw",
+           "inqaba",
+           "uw",
+           "inqaba",
+           "inqaba",
+           "inqaba"]
 pool_dirs=pool_dirs .* pool_dirs_ext
 println(pool_dirs)
 
